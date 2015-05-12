@@ -9,20 +9,15 @@ import java.util.concurrent.TimeUnit;
 
 public final class BoundedBlockingPool<T> extends AbstractBlockingPool<T> {
     private int size;
-
     private BlockingQueue<T> objects;
-
     private Validator<T> validator;
     private ObjectFactory<T> objectFactory;
-
     private ExecutorService executor = Executors.newCachedThreadPool();
 
     private volatile boolean shutdownCalled;
 
     public BoundedBlockingPool(int size, Validator<T> validator,
             ObjectFactory<T> objectFactory) {
-        super();
-
         this.objectFactory = objectFactory;
         this.size = size;
         this.validator = validator;

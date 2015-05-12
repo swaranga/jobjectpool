@@ -6,23 +6,19 @@ import java.util.concurrent.Semaphore;
 
 public class BoundedPool<T> extends AbstractPool<T> {
     private int size;
-
     private Queue<T> objects;
-
     private Validator<T> validator;
     private ObjectFactory<T> objectFactory;
-
     private Semaphore permits;
 
     private volatile boolean shutdownCalled;
 
     public BoundedPool(int size, Validator<T> validator,
             ObjectFactory<T> objectFactory) {
-        super();
-
         this.objectFactory = objectFactory;
         this.size = size;
         this.validator = validator;
+        this.permits = new Semaphore(size);
 
         objects = new LinkedList<T>();
 
